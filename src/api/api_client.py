@@ -4,10 +4,13 @@ BASE_URL = "https://api.binance.com/api/v3"
 
 def get_symbol_price(symbol):
     url = f"{BASE_URL}/ticker/price"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
     params = {"symbol": symbol}
 
     try:
-        response = requests.get(url, params=params)
+        response = requests.get(url, headers=headers, params=params)
         response.raise_for_status()
         data = response.json()
         return data
@@ -26,8 +29,11 @@ def get_top_symbols_by_price(limit=50):
         return EXCHANGE_INFO_CACHE["top_symbols"]
     
     url = f"{BASE_URL}/ticker/price"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+    }
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=headers)
         response.raise_for_status()
         all_tickers = response.json()
 
