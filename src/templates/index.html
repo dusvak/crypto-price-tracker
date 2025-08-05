@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Price Tracker</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f9; text-align: center; margin-top: 50px; }
+        .container { max-width: 500px; margin: auto; }
+        .card { background-color: white; padding: 20px 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        .symbol { font-size: 2em; font-weight: bold; color: #5d5d5d; }
+        .price { font-size: 3em; font-weight: bold; color: #007bff; margin-top: 10px; transition: color 0.5s; }
+        form { margin-top: 30px; }
+        input[type="text"] { padding: 10px; width: 60%; border: 1px solid #ccc; border-radius: 5px; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .base-selector { margin: 15px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h1>Preço Atual</h1>
+        <div id="current-symbol" class="symbol">{{ context.symbol }}</div>
+        <div id="current-price" class="price">{{ context.price }}</div>
+    </div>
+
+    <form action="/" method="POST" class="card" style="margin-top: 20px;">
+        <h3>Consultar Outra Moeda</h3>
+        
+        <label for="crypto-select">Criptomoeda:</label>  
+
+        <select id="crypto-select" name="crypto_select">
+            {% for s in context.all_symbols %}
+                <option value="{{ s }}" {% if s == context.crypto %}selected{% endif %}>
+                    {{ s }}
+                </option>
+            {% endfor %}
+        </select>
+          
+  
+
+        <div class="base-selector">
+            <label>Moeda Base:</label>  
+
+            <input type="radio" id="usdt" name="base" value="USDT" {% if context.base == 'USDT' %}checked{% endif %}>
+            <label for="usdt">Dólar (USDT)</label>
+            &nbsp;&nbsp;
+            <input type="radio" id="brl" name="base" value="BRL" {% if context.base == 'BRL' %}checked{% endif %}>
+            <label for="brl">Real (BRL)</label>
+        </div>
+        <button type="submit">Consultar</button>
+    </form>
+</div>
+
+<script>
+    async function updatePrice() {
+        const symbolElement = document.getElementById('current-symbol');
+        const priceElement = document.getElementById('current-price');
+        
+        const currentSymbol = symbolElement.textContent;
+
+        try {
+            const response = await fetch(`/api/price/${currentSymbol}`);
+            const data = await response.json();
+
+            if (data.error) {
+                console.error(data.error);
+            } else {
+                if (priceElement.textContent !== data.price) {
+                    priceElement.textContent = data.price;
+                    priceElement.style.color = '#28a745';
+                    setTimeout(() => {
+                        priceElement.style.color = '#007bff';
+                    }, 500);
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao buscar o preço:', error);
+        }
+    }
+
+    setInterval(updatePrice, 1000);
+</script>
+
+</body>
+</html>
