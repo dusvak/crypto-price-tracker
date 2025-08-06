@@ -17,9 +17,13 @@ This project was developed as a portfolio item to demonstrate a set of back-end 
 *   **Real-time Updates:** The price of the selected coin automatically updates every 1 second, without the need to refresh the page.
 *   **Clean Interface:** Presents data clearly and objectively.
 
+## Live Demo
+
+*   You can access this project and see it running in real-time here: https://crypto-price-tracker-ixx7.onrender.com/
+
 ## Demo
 
-*Coming soon*
+![Gif_demo](assets/demo.gif)
 
 ## How to Run the Project Locally
 
@@ -62,6 +66,7 @@ This project was developed as a portfolio item to demonstrate a set of back-end 
 
 ## Project Structure
 
+´´´
 binance-crypto-tracker/
 ├── .gitignore
 ├── README.md
@@ -76,4 +81,4 @@ binance-crypto-tracker/
 │   └── main.py                # Flask application (routes and main logic)
 └── tests/
     └── test_formatter.py      # Tests for formatting functions
-
+´´´
