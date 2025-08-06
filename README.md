@@ -66,7 +66,7 @@ This project was developed as a portfolio item to demonstrate a set of back-end 
 
 ## Project Structure
 
-´´´
+```
 binance-crypto-tracker/
 ├── .gitignore
 ├── README.md
@@ -81,4 +81,4 @@ binance-crypto-tracker/
 │   └── main.py                # Flask application (routes and main logic)
 └── tests/
     └── test_formatter.py      # Tests for formatting functions
-´´´
+```
